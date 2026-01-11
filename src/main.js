@@ -17,6 +17,14 @@
 import localStorageApi from './js/local-storage-api';
 import refs from './js/refs';
 import { handleAddTask, handleDeleteTask } from './js/tasks';
+import { handleChangeTheme } from './js/theme-switcher';
+import { initTheme } from './js/theme-switcher';
+
 localStorageApi.initTask();
+
+initTheme();
+
 refs.form.addEventListener('submit', handleAddTask);
 refs.taskList.addEventListener('click', handleDeleteTask);
+
+refs.changeThemeBtn.addEventListener('click', handleChangeTheme);
