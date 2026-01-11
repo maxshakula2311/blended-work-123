@@ -1,5 +1,6 @@
-import { renderMarkupTask } from "./render-tasks";
-import localStorageApi from "./local-storage-api";
+import { renderMarkupTask } from './render-tasks';
+import localStorageApi from './local-storage-api';
+import { nanoid } from 'nanoid';
 
 export function handleAddTask(event) {
   event.preventDefault();
@@ -9,10 +10,21 @@ export function handleAddTask(event) {
     return;
   }
   const task = {
+    id: nanoid(),
     name: taskName.value.trim(),
     desc: taskDescription.value.trim(),
-    };
+  };
+  console.log('🚀 ~ handleAddTask ~ task:', task);
   renderMarkupTask(task);
+
   localStorageApi.saveTask(task);
-    event.target.reset();
+  event.target.reset();
+}
+
+export function handleDeleteTask(event) {
+  if (event.target.nodeName !== 'BUTTON') return;
+  const liEl = event.target.closest('li');
+  const liElementId = liEl.dataset.id;
+  liEl.remove();
+  localStorageApi.deleteTask(liElementId);
 }
